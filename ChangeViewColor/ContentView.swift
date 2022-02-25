@@ -15,12 +15,6 @@ struct ContentView: View {
     @State private var redValue = ""
     @State private var greenValue = ""
     @State private var blueValue = ""
-   
-    @State private var alertPresented = false
-    
-    @State private var redSliderMoving = false
-    @State private var greenSliderMoving = false
-    @State private var blueSliderMoving = false
     
     let size = CGSize(width: 10, height: 10)
     
@@ -33,11 +27,10 @@ struct ContentView: View {
             ColorSliderView(value: $redSliderValue, stringValue: $redValue, color: .red)
             ColorSliderView(value: $greenSliderValue, stringValue: $greenValue, color: .green)
             ColorSliderView(value: $blueSliderValue, stringValue: $blueValue, color: .blue)
-            
             Spacer()
+            
         }.padding()
     }
-    
   
 }
 

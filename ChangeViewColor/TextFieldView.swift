@@ -11,29 +11,33 @@ struct TextFieldView: View {
     @Binding var getSliderValue: Double
     @Binding var sliderValue: String
     
-   // @Binding var alertPresented: Bool
+    @State private var alertPresented = false
    
     var body: some View {
         TextField("0", text: $sliderValue, onEditingChanged: { _ in
-            check()
+            withAnimation {
+                check()
+            }
         })
             .borded()
+            .keyboardType(.decimalPad)
+            .alert("Wrong format", isPresented: $alertPresented, actions: {}) {
+                Text("Plese, enter correct value from 0 to 255")
+            }
             .frame(width: 45, height: 10)
             .padding(.trailing)
             
     }
     
     private func check() {
-        let new = String(format: "%.0f", getSliderValue)
-        sliderValue = new
+        if let value = Int(sliderValue), (0...255).contains(value) {
+            getSliderValue = Double(value)
+            return
+        }
+        alertPresented.toggle()
+        getSliderValue = 0
+        sliderValue = "0"
         
-        if let new2 = Double(sliderValue) {
-            getSliderValue = new2
-        }
-        else {
-      //  alertPresented.toggle()
-        return
-        }
     }
 }
 

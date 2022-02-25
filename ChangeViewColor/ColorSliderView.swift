@@ -11,8 +11,6 @@ struct ColorSliderView: View {
     @Binding var value: Double
     @Binding var stringValue: String
     
-    //@Binding var alertPresented: Bool
-    
     let color: Color
     
     var body: some View {
@@ -20,31 +18,17 @@ struct ColorSliderView: View {
             Text("0").foregroundColor(color)
             Slider(value: $value, in: 0...255, step: 1)
                 .tint(color)
-                .onChange(of: value) { newValue in
-                changeValue()
+                .onChange(of: value) { isOnFocus in
+                    stringValue = "\(lround(value))"
             }
             Text("255").foregroundColor(color)
             TextFieldView(getSliderValue: $value, sliderValue: $stringValue)
         }.padding(.horizontal)
+            .onAppear {
+                stringValue = "\(lround(value))"
+            }
     }
     
-    func changeValue() {
-        let new = string(from: value)
-        stringValue = new
-    }
-    
-    private func string(from slider: Double) -> String {
-        String(format: "%.0f", slider)
-    }
-    
-    private func doubleCheck() {
-        if let newS = Double(stringValue) {
-            value = newS
-            return
-        }
-        stringValue = ""
-     //   alertPresented.toggle()
-    }
 }
 
 struct ColorSliderView_Previews: PreviewProvider {
